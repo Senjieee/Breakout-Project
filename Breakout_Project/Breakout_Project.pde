@@ -24,7 +24,8 @@ color purple = color(195, 0, 255);
 color grey = color(59, 53, 54);
 color black = color(0);
 color white = color(255);
-color darkBlue = #272D4D;
+color darkBlue = color(77, 73, 232);
+color lightestBlue = color(110, 199, 242);
 color mango = #FF6A5A;
 
 int mode;
@@ -34,6 +35,7 @@ final int pause = 2;
 final int gameOver = 3;
 
 float bx, by, bd, vx, vy, px, py, pd;
+float c;
 
 boolean akey, dkey;
 boolean[] alive;
@@ -43,6 +45,7 @@ int[] y;
 int brickd;
 int n;
 int tempx, tempy;
+int score, lives;
 
 void setup() {
   size(800, 800);
@@ -59,16 +62,20 @@ void setup() {
   vx = 0;
   vy = 1;
   brickd = 50;
-  n = 91;
+  n = 117;
   x = new int[n];
   y = new int[n];
+  alive = new boolean[n];
   tempx = 100;
   tempy = 100;
+  lives = 3;
+  score = 0;
   
   int i = 0;
   while (i < n) {
     x[i] = tempx;
     y[i] = tempy;
+    alive[i] = true;
     tempx = tempx + 50;
     if (tempx == width-50) {
       tempy = tempy + 50;

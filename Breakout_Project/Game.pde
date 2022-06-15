@@ -6,15 +6,16 @@ void game() {
   circle(px, py, pd);
   if (akey) px = px - 5;
   if (dkey) px = px + 5;
-  if (px == 0) {
+  
+  if (px < 0) {
     px = 0;
   }
-  if (px == width) {
+  if (px > width) {
     px = width;
   }
   
   //ball
-  fill(white);
+  fill(black);
   circle(bx, by, bd);
   bx = bx + vx;
   by = by + vy;
@@ -24,24 +25,81 @@ void game() {
     vx = (bx - px)/8;
     vy = (by - py)/8;
   }
-  if (by < bd/2 || by > height-bd/2) {
+  if (by < bd/2) {
     vy = vy*-1;
   }
   if (bx < bd/2 || bx > width-bd/2) {
     vx = vx*-1;
   }
+  if (by > height) {
+    lives--;
+    bx = width/2;
+    by = height-200;
+    vx = 0;
+    vy = 1;
+  }
   
   //bricks
+  colorMode(HSB);
+  
   int i = 0;
   while (i < n) {
-    circle(x[i], y[i], brickd);
-    if (dist(bx, by, x[i], y[i]) < bd/2 + brickd/2) {
-    vx = (bx - x[i])/8;
-    vy = (by - y[i])/8;
+    if (alive[i] == true) {
+      manageBrick(i);
+    }
+    i++;
   }
-    i = i + 1;
+  fill(black);
+  textSize(30);
+  text("Score:" + score, 100, 40);
+  text("Lives:" + lives, 250, 40);
+  
+  if (score == n) {
+    mode = gameOver;
+  }
+  if (lives == 0) {
+    mode = gameOver;
   }
 }
 
 void gameClicks() {
+  mode = pause;
+}
+
+void manageBrick(int i) {
+    if (y[i] == 100) {
+      c = 255;
+    }
+    if (y[i] == 150) {
+      c = 235;
+    }
+    if (y[i] == 200) {
+      c = 215;
+    }
+    if (y[i] == 250) {
+      c = 195;
+    }
+    if (y[i] == 300) {
+      c = 175;
+    }
+    if (y[i] == 350) {
+      c = 155;
+    }
+    if (y[i] == 400) {
+      c = 135;
+    }
+    if (y[i] == 450) {
+      c = 115;
+    }
+    if (y[i] == 500) {
+      c = 95;
+    }
+    fill(100, c, 255);
+    circle(x[i], y[i], brickd);
+    if (dist(bx, by, x[i], y[i]) < bd/2 + brickd/2) {
+    vx = (bx - x[i])/6;
+    vy = (by - y[i])/6;
+    alive[i] = false;
+    score++;
+  }
 }
