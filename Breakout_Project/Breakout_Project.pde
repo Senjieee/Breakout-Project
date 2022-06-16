@@ -10,7 +10,10 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
-PFont washyourhands;
+PFont WashYourHand;
+
+PImage[] gif;
+int s;
 
 Minim minim;
 AudioPlayer theme, coin, bump, gameover;
@@ -36,9 +39,11 @@ final int gameOver = 3;
 
 float bx, by, bd, vx, vy, px, py, pd;
 float c;
+float k;
 
 boolean akey, dkey;
 boolean[] alive;
+boolean r;
 
 int[] x;
 int[] y;
@@ -46,12 +51,25 @@ int brickd;
 int n;
 int tempx, tempy;
 int score, lives;
+int f;
 
 void setup() {
   size(800, 800);
   mode = intro;
   textAlign(CENTER, CENTER);
   noStroke();
+  
+  WashYourHand = createFont("WashYourHand.ttf", 200);
+  textFont(WashYourHand);
+  
+  s = 10;
+  gif = new PImage[s];
+  
+  int f = 0;
+  while(f < s) {
+    gif[f] = loadImage("frame_"+f+"_delay-0.06s.gif");
+    f++;
+  }
   
   bx = width/2;
   by = height-200;
@@ -61,6 +79,7 @@ void setup() {
   pd = 100;
   vx = 0;
   vy = 1;
+  k = 0;
   brickd = 50;
   n = 117;
   x = new int[n];
@@ -102,5 +121,17 @@ void draw() {
     gameOver();
   } else {
     println("Error: Mode = " + mode);
+  }
+  
+  if (k > 40) {
+    r = true;
+  } else if (k < 40) {
+    r = false;
+  }
+  
+  k++;
+  
+  if (k > 60) {
+    k = 0;
   }
 }
