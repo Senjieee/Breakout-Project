@@ -1,11 +1,12 @@
 void intro() {
-  image(gif[f], 0, 0, width, height);
-  f = f + 1;
+  image(gif[f], 0, 0, width, height);  
+  if(frameCount % 1 == 0) f = f + 1;
+  if (f == s) f = 0;
   
-  theme.rewind();
+  println(f);
+  
   theme.play();
-  background(white);
-  fill(black);
+  fill(white);
   textSize(150);
   text("Breakout!", width/2, height/2);
 }

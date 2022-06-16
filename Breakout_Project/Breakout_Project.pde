@@ -68,7 +68,7 @@ void setup() {
   int f = 0;
   while(f < s) {
     gif[f] = loadImage("frame_"+f+"_delay-0.06s.gif");
-    f++;
+    f = f + 1;
   }
   
   bx = width/2;
